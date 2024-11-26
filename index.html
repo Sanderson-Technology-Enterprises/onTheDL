@@ -11,7 +11,7 @@
       name="description"
       content="Knockoff version of the Enigma machine that is really just a fancy Caesar cipher."
     />
-    <title>Caesar's Enigma</title>
+    <title>On the DL</title>
     <style>
       /* Define CSS variables */
       :root {
@@ -61,9 +61,15 @@
         justify-content: center;
       }
 
-      h1 {
+      h1,
+      h3 {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+
+      .container hr {
+        width: 100%;
       }
 
       .description {
@@ -136,7 +142,9 @@
   <body>
     <!-- Main Content Container -->
     <div class="container">
-      <h1>Caesar's Enigma</h1>
+      <h1>On the DL</h1>
+      <h3>Simple message encrypter</h3>
+      <hr />
       <div class="options">
         <!-- Encrypt and Decrypt Buttons -->
         <button id="encrypt">Encrypt</button>
