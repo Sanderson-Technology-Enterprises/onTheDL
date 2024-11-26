@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Knockoff version of the Enigma machine that is really just a fancy Caesar cipher."
+    />
+    <title>Caesar's Enigma</title>
+    <style>
+      /* Define CSS variables */
+      :root {
+        letter-spacing: 1px;
+        font-size: 25px;
+
+        --white: #ffffff;
+
+        --primary_darkest: #0a105c;
+        --primary_dark: #131a77;
+        --primary: #1f2793;
+        --primary_light: #3a42a5;
+        --primary_lighter: #575eb4;
+
+        --secondary_darkest: #00504d;
+        --secondary_dark: #026965;
+        --secondary: #0a817c;
+        --secondary_light: #23908c;
+        --secondary_lighter: #40a09c;
+
+        --accent_darkest: #330559;
+        --accent_dark: #440a74;
+        --accent: #58148f;
+        --accent_light: #6d2fa0;
+        --accent_lighter: #834eaf;
+
+        scroll-behavior: smooth;
+      }
+
+      /* UI Styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--primary_darkest);
+      }
+
+      .container {
+        max-width: 75%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: var(--secondary_darkest);
+        color: var(--white);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .description {
+        text-align: center;
+        margin: 10px auto 30px;
+        width: 90%;
+      }
+
+      .inputWrapper {
+        margin: 10px;
+      }
+
+      textarea {
+        display: flex;
+        width: 98%;
+        padding: 10px 1%;
+        margin: 10px auto;
+        border: 1px solid var(--secondary_darkest);
+        background-color: var(--secondary);
+        color: var(--white);
+        border-radius: 6px;
+        resize: none;
+      }
+
+      .options {
+        display: flex;
+        align-items: center;
+        margin: 10px auto;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+
+      input[type="number"] {
+        width: 100px;
+        padding: 5px;
+        margin-right: 10px;
+        border: 1px solid var(--secondary_darkest);
+        background-color: var(--secondary);
+        color: var(--white);
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 8px 15px;
+        margin: 0 3px;
+        border: none;
+        border-radius: 5px;
+        background-color: var(--accent_darkest);
+        color: var(--white);
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: var(--accent);
+      }
+
+      #output {
+        margin: 10px auto;
+        padding: 10px;
+        border: 1px solid var(--secondary_darkest);
+        background-color: var(--secondary);
+        color: var(--white);
+        border-radius: 6px;
+        min-height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main Content Container -->
+    <div class="container">
+      <h1>Caesar's Enigma</h1>
+      <div class="options">
+        <!-- Encrypt and Decrypt Buttons -->
+        <button id="encrypt">Encrypt</button>
+        <button id="decrypt">Decrypt</button>
+      </div>
+      <div class="inputWrapper">
+        <h3>Input</h3>
+        <!-- User Input Section -->
+        <textarea
+          name="inputArea"
+          id="textInput"
+          cols="30"
+          rows="10"
+        ></textarea>
+        <!-- Function Output Section -->
+        <h3>Output</h3>
+        <p id="output"></p>
+      </div>
+    </div>
+  </body>
+  <script>
+    " ";
+    // Encryption alphabets
+    const a1 =
+      "ВЛCюиawуъчGNybгыГЧзаЩкАqФxcjфLМеЙоIMpЯiДzБndZJмRAтKfсUОИktOЗЁFнhТsЭWлёlЪvНпYжBЖПяшдPgУвmСuКQйщхРэXЬDШХVreбьЮЦEЕSцTHрЫo";
+    const a2 =
+      "аЮWАtBыИCзТЦрVaMКуПdШДибхсФйRЧЕюдЬмжУЯНoЛgЫvявrPmuTЙЪiлqxefZЖDKXwJQspВFБХUlhнcHгцLEтЩоYъэМOINSzкеnjОГЭЁщbпkРёфЗСчьAшyG";
+    const a3 =
+      "еЩbаANiЬмьДЖрЫTдkГЪWлъyюtАЭwФKHufЛёYQКSбщgчэйlЧпяЁифХMгqЙvыrВpтЗсhкоLxзsРGЕУXdшуцнПСUЦШжОЮDPвjcaCmЯИVzБeНJIМFEOoТnBхZR";
+    const a4 =
+      "эrПCWБKтДбvпъEYpьLXRоЯеКйGAteфЗBыJцnQХlсЩkSРзЦнОжjoГOСАЮЭЛУaуmuМMТЙwdФЪsШИgTлiPиЧщНЕгhхFЫюЁмчVIZаcдqшyUВЬвёкxfzDрNяHЖb";
+    const a5 =
+      "aeXEyhjЬrCЭТднОfЙPКЮДёwмЁшМxНbцApрzзСьщАуJЪNЖTъQюUЦMлпmяqBWоFuИOБикэiЕtПЧLЩаеЗcYDГФdфZтУЯйSвoбlkgЛsЫnKRШжHВХхvVсчгGыРI";
+    const alphabets = [a1, a2, a3, a4, a5];
+
+    const ENCRYPTION_TAG = "[EN_V1]";
+
+    /**
+     * Encrypts or decrypts a given text using a Caesar cipher and multiple rotating alphabets.
+     * When encrypting, a "magic number" is generated to shift the characters, and the encrypted
+     * text is marked with a tag and the magic number. When decrypting, the function retrieves
+     * the magic number from the tag and reverses the shift.
+     *
+     * @param {string} text - The text to be encrypted or decrypted.
+     * @param {boolean} [encrypt=true] - Flag to specify whether to encrypt or decrypt the text.
+     * @returns {string} - The encrypted or decrypted text.
+     */
+    function encryptAndDecrypt(text, encrypt = true) {
+      function generateMagicNumber() {
+        const min = 5;
+        const max = 999;
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      const alphabetLists = alphabets; // Assume this is an array of alphabet strings
+      if (typeof text !== "string") return text; // Return if not a string
+
+      let magicNumber;
+      let resultText = "";
+      const totalAlphabets = alphabetLists.length;
+
+      if (!encrypt) {
+        // Decryption logic
+        const encryptionTagIndex = text.lastIndexOf(ENCRYPTION_TAG);
+
+        // Find the last opening bracket before the encryption tag
+        const magicNumberStartIndex = text.lastIndexOf(
+          "[",
+          encryptionTagIndex - 1
+        );
+
+        // Ensure both indices are valid
+        if (encryptionTagIndex === -1 || magicNumberStartIndex === -1) {
+          // console.error("Error: Missing encryption tag or magic number.");
+          return text; // Return original text if in unexpected format
+        }
+
+        // Extract the magic number string
+        const magicNumberString = text.slice(
+          magicNumberStartIndex + 1,
+          encryptionTagIndex
+        );
+
+        // console.log(`Magic number string extracted: "${magicNumberString}"`);
+
+        magicNumber = parseInt(magicNumberString, 10);
+
+        // Handle NaN issue
+        if (isNaN(magicNumber)) {
+          console.error(
+            `Error: Failed to parse magic number. Extracted string: "${magicNumberString}"`
+          );
+          return text; // Return the original text if the magic number is invalid
+        }
+
+        // Remove the magic number and tag from the text
+        text = text.slice(0, magicNumberStartIndex);
+        // console.log(
+        //   `Decrypted text after removing magic number and tag: "${text}"`
+        // );
+
+        magicNumber = -magicNumber; // Reverse for decryption
+      } else {
+        // Encryption logic
+        magicNumber = generateMagicNumber();
+        if (text.endsWith(ENCRYPTION_TAG)) return text; // Already encrypted
+      }
+
+      // Apply cipher (both for encryption and decryption)
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const currentAlphabet = alphabetLists[i % totalAlphabets];
+        const alphabetLength = currentAlphabet.length;
+        const index = currentAlphabet.indexOf(char);
+
+        if (index !== -1) {
+          let newIndex = (index + magicNumber) % alphabetLength;
+          if (newIndex < 0) newIndex += alphabetLength; // Handle negative index for decryption
+          resultText += currentAlphabet[newIndex];
+        } else {
+          resultText += char; // Keep unchanged if not in the alphabet
+        }
+      }
+
+      if (encrypt) {
+        resultText += `[${magicNumber}${ENCRYPTION_TAG}`; // Append magic number and tag
+      }
+
+      return resultText;
+    }
+
+    // Function to handle encryption
+    function encrypter() {
+      const key = document.getElementById("key").value;
+      const message = document.getElementById("textInput").value;
+      // Encrypt the message and display the result
+      const encrypted = encryptAndDecrypt(message, true);
+      document.getElementById("output").innerText = encrypted;
+    }
+
+    // Function to handle decryption
+    function decrypter() {
+      const key = document.getElementById("key").value;
+      const message = document.getElementById("textInput").value;
+      // Decrypt the message and display the result
+      const decrypted = encryptAndDecrypt(message, false);
+      document.getElementById("output").innerText = decrypted;
+    }
+
+    // Event listeners for the encrypt and decrypt buttons
+    document.getElementById("encrypt").addEventListener("click", encrypter);
+    document.getElementById("decrypt").addEventListener("click", decrypter);
+  </script>
+</html>
