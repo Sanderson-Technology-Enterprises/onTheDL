@@ -137,6 +137,11 @@
         border-radius: 6px;
         min-height: 50px;
       }
+
+      .centWrap {
+        display: flex;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
@@ -161,6 +166,9 @@
         ></textarea>
         <!-- Function Output Section -->
         <h3>Output</h3>
+        <div class="centWrap">
+          <button id="copyButton">Copy to clipboard</button>
+        </div>
         <p id="output"></p>
       </div>
     </div>
@@ -278,7 +286,7 @@
 
     // Function to handle encryption
     function encrypter() {
-      const key = document.getElementById("key").value;
+      document.getElementById("output").innerText = "";
       const message = document.getElementById("textInput").value;
       // Encrypt the message and display the result
       const encrypted = encryptAndDecrypt(message, true);
@@ -287,7 +295,7 @@
 
     // Function to handle decryption
     function decrypter() {
-      const key = document.getElementById("key").value;
+      document.getElementById("output").innerText = "";
       const message = document.getElementById("textInput").value;
       // Decrypt the message and display the result
       const decrypted = encryptAndDecrypt(message, false);
