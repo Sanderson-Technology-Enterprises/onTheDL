@@ -159,36 +159,217 @@
         <h3>Input</h3>
         <!-- User Input Section -->
         <textarea
+          title="Text Input"
           name="inputArea"
           id="textInput"
           cols="30"
           rows="10"
-        ></textarea>
+        >
+          Insert text here</textarea
+        >
         <!-- Function Output Section -->
         <h3>Output</h3>
         <div class="centWrap">
           <button id="copyButton">Copy to clipboard</button>
         </div>
-        <p id="output"></p>
+        <textarea
+          title="Text Output"
+          name="outputArea"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        >
+          Output text here</textarea
+        >
       </div>
     </div>
   </body>
   <script>
     " ";
     // Encryption alphabets
-    const a1 =
-      "ВЛCюиawуъчGNybгыГЧзаЩкАqФxcjфLМеЙоIMpЯiДzБndZJмRAтKfсUОИktOЗЁFнhТsЭWлёlЪvНпYжBЖПяшдPgУвmСuКQйщхРэXЬDШХVreбьЮЦEЕSцTHрЫo";
-    const a2 =
-      "аЮWАtBыИCзТЦрVaMКуПdШДибхсФйRЧЕюдЬмжУЯНoЛgЫvявrPmuTЙЪiлqxefZЖDKXwJQspВFБХUlhнcHгцLEтЩоYъэМOINSzкеnjОГЭЁщbпkРёфЗСчьAшyG";
-    const a3 =
-      "еЩbаANiЬмьДЖрЫTдkГЪWлъyюtАЭwФKHufЛёYQКSбщgчэйlЧпяЁифХMгqЙvыrВpтЗсhкоLxзsРGЕУXdшуцнПСUЦШжОЮDPвjcaCmЯИVzБeНJIМFEOoТnBхZR";
-    const a4 =
-      "эrПCWБKтДбvпъEYpьLXRоЯеКйGAteфЗBыJцnQХlсЩkSРзЦнОжjoГOСАЮЭЛУaуmuМMТЙwdФЪsШИgTлiPиЧщНЕгhхFЫюЁмчVIZаcдqшyUВЬвёкxfzDрNяHЖb";
-    const a5 =
-      "aeXEyhjЬrCЭТднОfЙPКЮДёwмЁшМxНbцApрzзСьщАуJЪNЖTъQюUЦMлпmяqBWоFuИOБикэiЕtПЧLЩаеЗcYDГФdфZтУЯйSвoбlkgЛsЫnKRШжHВХхvVсчгGыРI";
-    const alphabets = [a1, a2, a3, a4, a5];
+    const aSet = {
+      a0:
+        "$ydjAc XP/W\r[,^?J'IKRkSN+<hYfOszBD#t4@p_HuUMQiTx3l>vG6e\n" +
+        '-(wE%:m"r5.og=n98L{)]b0*Z&q}a~CV7!;21F',
+      a1:
+        `oVB$4G!&Iyx=MN6EKpH97W<FtDR/*S3'.c%_[avJeCz8")2],5OrbldwsmqunTjAQfhigUkLPXY;+( \n` +
+        "Z}0-\r:1@^~{>?#",
+      a2:
+        `M-hoFkRzwEvnOTfaHGSjKPIAtsmNbygeJVW*rlL}>d{u&pD^[CxBc=Q:qU_ i(5@\r,$X1#Z!%+;Y<.'807?]/6~2")\n` +
+        "349",
+      a3:
+        "461opW3M,YePI=<~d2%n};r?Kg{wH(]^*fm!>\n" +
+        `0cy".vZ@S5'+t9sqQRuEGLNAOlFVhzTJ)-BXDbj7ikU_aC \r&:[/$8#x`,
+      a4:
+        "+( {X>NrT2}@iJ-UcGK,5n[6<t\n" +
+        `"M_Wf79.\rO8d)b/xgAQk4C;Rh^=qme'1%D]jva*w0!:V&sEHl?S$Y#IyozB3PpuZF~L`,
+      bundle: [
+        "$ydjAc XP/W\r[,^?J'IKRkSN+<hYfOszBD#t4@p_HuUMQiTx3l>vG6e\n" +
+          '-(wE%:m"r5.og=n98L{)]b0*Z&q}a~CV7!;21F',
+        `oVB$4G!&Iyx=MN6EKpH97W<FtDR/*S3'.c%_[avJeCz8")2],5OrbldwsmqunTjAQfhigUkLPXY;+( \n` +
+          "Z}0-\r:1@^~{>?#",
+        `M-hoFkRzwEvnOTfaHGSjKPIAtsmNbygeJVW*rlL}>d{u&pD^[CxBc=Q:qU_ i(5@\r,$X1#Z!%+;Y<.'807?]/6~2")\n` +
+          "349",
+        "461opW3M,YePI=<~d2%n};r?Kg{wH(]^*fm!>\n" +
+          `0cy".vZ@S5'+t9sqQRuEGLNAOlFVhzTJ)-BXDbj7ikU_aC \r&:[/$8#x`,
+        "+( {X>NrT2}@iJ-UcGK,5n[6<t\n" +
+          `"M_Wf79.\rO8d)b/xgAQk4C;Rh^=qme'1%D]jva*w0!:V&sEHl?S$Y#IyozB3PpuZF~L`,
+      ],
+    };
 
-    const ENCRYPTION_TAG = "[EN_V1]";
+    const bSet = {
+      b0:
+        "a\n" +
+        `D?/p#LFY1U@{C-\r^J(*%_"9j.mSX,6:O8'uK03vZxo!5yw2bM&I ]G4Qt$eET+kn~Hz;R[ficd>sWAPqrlg<=})VNh7B`,
+      b1:
+        "^u'Rf>maK!xv%9p1H/A+[LBkOJsQ&zD;_.\n" +
+        'IlM#"~Vqthg,NGCy4{iZFb]ne?=U(ST$c wd)}orP<:YWj5X3@8*\r7062-E',
+      b2:
+        `04~6X?:}8\r7hWdv_Tt3'Gl%y M"*<Dx^OS+!#psu,ZE]ae1o2r.)UVnjC{5cY>$\n` +
+        "(Iqw[;@&JBg=PLNQFRf/m9b-KAiHkz",
+      b3:
+        "GZRBA^xL%geSwsrQNlm?dMiJcozX7C}kb#9YhIq6OtTj-FH3:{8[)u+n'*2(ap>0~K/E!f\r,yv$D<]WP_\n" +
+        '1 4="V.@&5;U',
+      b4:
+        "aVDWbc(q$Hs4<~[G:K^)I]xEkdMli;y/B81mF%efr3\n" +
+        `UwS\r 'jPLY{Q7.o@5N9Xtv*=!60"R},?-g_+ZC&2h#nAuzOJpT>`,
+      bundle: [
+        "a\n" +
+          `D?/p#LFY1U@{C-\r^J(*%_"9j.mSX,6:O8'uK03vZxo!5yw2bM&I ]G4Qt$eET+kn~Hz;R[ficd>sWAPqrlg<=})VNh7B`,
+        "^u'Rf>maK!xv%9p1H/A+[LBkOJsQ&zD;_.\n" +
+          'IlM#"~Vqthg,NGCy4{iZFb]ne?=U(ST$c wd)}orP<:YWj5X3@8*\r7062-E',
+        `04~6X?:}8\r7hWdv_Tt3'Gl%y M"*<Dx^OS+!#psu,ZE]ae1o2r.)UVnjC{5cY>$\n` +
+          "(Iqw[;@&JBg=PLNQFRf/m9b-KAiHkz",
+        "GZRBA^xL%geSwsrQNlm?dMiJcozX7C}kb#9YhIq6OtTj-FH3:{8[)u+n'*2(ap>0~K/E!f\r,yv$D<]WP_\n" +
+          '1 4="V.@&5;U',
+        "aVDWbc(q$Hs4<~[G:K^)I]xEkdMli;y/B81mF%efr3\n" +
+          `UwS\r 'jPLY{Q7.o@5N9Xtv*=!60"R},?-g_+ZC&2h#nAuzOJpT>`,
+      ],
+    };
+
+    const cSet = {
+      c0:
+        `*lnpIKboJxRvhidrF_1kS<GwU"TCuB^q~Y f&';a\n` +
+        "Ae62W@:(0V%sQ$tOmM>34gyc9)jH}]#?NX\r/!Z[z-D8ELP,=.5+{7",
+      c1:
+        '"93r7\n' +
+        "!DYTb.4Nm_B%1XIvJz(+=PRyG[WQ,;SAdVag2^?'6Cf:{c\rip@>jx)$KZMuUH~sw/e5O<-qtkh] E*lF}nL0#8o&",
+      c2:
+        "h9%uQ]wG&62~W\n" +
+        `H}X=7$fL8^'E+nMT1eogCY,zqd?\r5A3cx/ZF!{@U.m(iV"_<S-O;4)#0>[:I *DrlbpytBaRjkJKNPsv`,
+      c3:
+        "^ijkhwOFrucVQ<9H/q%'=?}&Iaf)_M4@L[\n" +
+        ' D*zNBo5Rv.bUAxnK87C(dp6e"Y12$,3;JT0~sWtPGS>\r-m+#yEZ:g!X]l{',
+      c4:
+        "Q8b:mRgkBqV,v5~x-H{l*WDc.\n" +
+        `Ja]pei(GCwdK6?@ M\r$&102O3r9I'yUfhN)Sn/PTXoz}=E>A[Yu#7s+FtZL"!;<%^4j_`,
+      bundle: [
+        `*lnpIKboJxRvhidrF_1kS<GwU"TCuB^q~Y f&';a\n` +
+          "Ae62W@:(0V%sQ$tOmM>34gyc9)jH}]#?NX\r/!Z[z-D8ELP,=.5+{7",
+        '"93r7\n' +
+          "!DYTb.4Nm_B%1XIvJz(+=PRyG[WQ,;SAdVag2^?'6Cf:{c\rip@>jx)$KZMuUH~sw/e5O<-qtkh] E*lF}nL0#8o&",
+        "h9%uQ]wG&62~W\n" +
+          `H}X=7$fL8^'E+nMT1eogCY,zqd?\r5A3cx/ZF!{@U.m(iV"_<S-O;4)#0>[:I *DrlbpytBaRjkJKNPsv`,
+        "^ijkhwOFrucVQ<9H/q%'=?}&Iaf)_M4@L[\n" +
+          ' D*zNBo5Rv.bUAxnK87C(dp6e"Y12$,3;JT0~sWtPGS>\r-m+#yEZ:g!X]l{',
+        "Q8b:mRgkBqV,v5~x-H{l*WDc.\n" +
+          `Ja]pei(GCwdK6?@ M\r$&102O3r9I'yUfhN)Sn/PTXoz}=E>A[Yu#7s+FtZL"!;<%^4j_`,
+      ],
+    };
+
+    const dSet = {
+      d0:
+        '^)ij$ul,7D:eY%"2T(/&N#Vx?pgcPC+k4 rIFh6sb8{y5Of\n' +
+        "LR9w}~qad0ozAGM>1Bv.\rQ_W@;m3X-Z=H'[]E*!<UJnKtS",
+      d1:
+        'Tay\rBNub0Of_;MeqFr*l<[-@261oz,LV(3GQ $"hmKwPAWtHX\n' +
+        "iv^%s=cUC>8!k'Rd#~gj/:I)p?ZS7{E9}xn4JD+5&.]Y",
+      d2:
+        '!;b6_xgY&uW@"}j3Qolta^MAF<)\r0[4/?Ci{%:eDd-Kh*HVX,RS.+82LskUmq]w$~7p 9=#\n' +
+        "'1Z5v(n>JGBEINyPzcOrfT",
+      d3:
+        "lk#tzFd2b<sQrG.w1q8{vfPEO)eDK:i;@5 0TmxRg+!n6pBY=HM3A-4C\n" +
+        `$ohuNZ"&_}J~j%XacyI>ULWV,^*[7]/9\r'?S(`,
+      d4:
+        'RcFtmHo9pz/P,fkG;xS6I Z!B]"YX<?rubhj%NO0+457{W$ae}\n' +
+        "\rn2l'MqCE&U>#iA*s1gQT3^K~_yVv=d-.JDL()@8:[w",
+      bundle: [
+        '^)ij$ul,7D:eY%"2T(/&N#Vx?pgcPC+k4 rIFh6sb8{y5Of\n' +
+          "LR9w}~qad0ozAGM>1Bv.\rQ_W@;m3X-Z=H'[]E*!<UJnKtS",
+        'Tay\rBNub0Of_;MeqFr*l<[-@261oz,LV(3GQ $"hmKwPAWtHX\n' +
+          "iv^%s=cUC>8!k'Rd#~gj/:I)p?ZS7{E9}xn4JD+5&.]Y",
+        '!;b6_xgY&uW@"}j3Qolta^MAF<)\r0[4/?Ci{%:eDd-Kh*HVX,RS.+82LskUmq]w$~7p 9=#\n' +
+          "'1Z5v(n>JGBEINyPzcOrfT",
+        "lk#tzFd2b<sQrG.w1q8{vfPEO)eDK:i;@5 0TmxRg+!n6pBY=HM3A-4C\n" +
+          `$ohuNZ"&_}J~j%XacyI>ULWV,^*[7]/9\r'?S(`,
+        'RcFtmHo9pz/P,fkG;xS6I Z!B]"YX<?rubhj%NO0+457{W$ae}\n' +
+          "\rn2l'MqCE&U>#iA*s1gQT3^K~_yVv=d-.JDL()@8:[w",
+      ],
+    };
+
+    const eSet = {
+      e0:
+        'VW8&Y:<{!;.[_1}^ 35",~6\n' +
+        "]Q-aj#Es2J@'Zul\rK%*)pL?0S=zb+CHwqxFvPOcernTdyGtBfgAkNioMmIhDR/4X>97$U(",
+      e1:
+        "pivFuNDSTqn35)Jx@6c\n" +
+        `X%,g-Lkol[BamH/&21h}\rP0^Ow;K'debIjQCAf!R$~UyzGYr8E+sMW(*9>_?4:#{7V Z".]=<t`,
+      e2:
+        `nWTd?&xSAp\r,@!Yco3j$iU<XVr>(9D}~zgQ.5^2:P#6Ov-b0'ft=E"7;[%M8+1ZlB4*]eCa\n` +
+        "m)/Iy s{RkFGJKNqLhwHu_",
+      e3:
+        "Y5${V+%'W42?azx=;7AklZs@Xb!^v\rN3U#hCHS\"pDrt10B>]M&\n" +
+        "mI69R<-wf}[qFcKe/OQ)~Jd PyijL:gT8E,nG(ou._*",
+      e4:
+        `="+#-1 QXCgLYp)P{utBoxSID<;rE'VUb*,%9]N3.(nKvRajG_kAq6}5fd42WeThM&^@c:!>zHJy[7Zl\rsw?/i~mO08$\n` +
+        "F",
+      bundle: [
+        'VW8&Y:<{!;.[_1}^ 35",~6\n' +
+          "]Q-aj#Es2J@'Zul\rK%*)pL?0S=zb+CHwqxFvPOcernTdyGtBfgAkNioMmIhDR/4X>97$U(",
+        "pivFuNDSTqn35)Jx@6c\n" +
+          `X%,g-Lkol[BamH/&21h}\rP0^Ow;K'debIjQCAf!R$~UyzGYr8E+sMW(*9>_?4:#{7V Z".]=<t`,
+        `nWTd?&xSAp\r,@!Yco3j$iU<XVr>(9D}~zgQ.5^2:P#6Ov-b0'ft=E"7;[%M8+1ZlB4*]eCa\n` +
+          "m)/Iy s{RkFGJKNqLhwHu_",
+        "Y5${V+%'W42?azx=;7AklZs@Xb!^v\rN3U#hCHS\"pDrt10B>]M&\n" +
+          "mI69R<-wf}[qFcKe/OQ)~Jd PyijL:gT8E,nG(ou._*",
+        `="+#-1 QXCgLYp)P{utBoxSID<;rE'VUb*,%9]N3.(nKvRajG_kAq6}5fd42WeThM&^@c:!>zHJy[7Zl\rsw?/i~mO08$\n` +
+          "F",
+      ],
+    };
+
+    // const v1 = alphabets;
+    const v1 = aSet.bundle;
+    const v2 = bSet.bundle;
+    const v3 = cSet.bundle;
+    const v4 = dSet.bundle;
+    const v5 = eSet.bundle;
+    const v6 = [...v1, ...v2];
+    const v7 = [...v1, ...v2, ...v3];
+    const v8 = [...v1, ...v2, ...v3, ...v4];
+    const v9 = [...v1, ...v2, ...v3, ...v4, ...v5];
+    const alphabets = [v1, v2, v3, v4, v5, v6, v7, v8, v9];
+
+    const ENCRYPTION_TAG1 = "[EN_V1]";
+    const ENCRYPTION_TAG2 = "[EN_V2]";
+    const ENCRYPTION_TAG3 = "[EN_V3]";
+    const ENCRYPTION_TAG4 = "[EN_V4]";
+    const ENCRYPTION_TAG5 = "[EN_V5]";
+    const ENCRYPTION_TAG6 = "[EN_V6]";
+    const ENCRYPTION_TAG7 = "[EN_V7]";
+    const ENCRYPTION_TAG8 = "[EN_V8]";
+    const ENCRYPTION_TAG9 = "[EN_V9]";
+    const encryptionTags = [
+      ENCRYPTION_TAG1,
+      ENCRYPTION_TAG2,
+      ENCRYPTION_TAG3,
+      ENCRYPTION_TAG4,
+      ENCRYPTION_TAG5,
+      ENCRYPTION_TAG6,
+      ENCRYPTION_TAG7,
+      ENCRYPTION_TAG8,
+      ENCRYPTION_TAG9,
+    ];
 
     /**
      * Encrypts or decrypts a given text using a Caesar cipher and multiple rotating alphabets.
@@ -197,32 +378,51 @@
      * the magic number from the tag and reverses the shift.
      *
      * @param {string} text - The text to be encrypted or decrypted.
-     * @param {boolean} [encrypt=true] - Flag to specify whether to encrypt or decrypt the text.
+     * @param {boolean} [encrypt=true] - Flag to specify whether to encrypt(true) or decrypt(false) the text.
      * @returns {string} - The encrypted or decrypted text.
      */
     function encryptAndDecrypt(text, encrypt = true) {
+      console.log("Enigma 2.0 start:", { encrypt, text });
+
       function generateMagicNumber() {
         const min = 5;
         const max = 999;
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 
-      const alphabetLists = alphabets; // Assume this is an array of alphabet strings
       if (typeof text !== "string") return text; // Return if not a string
 
       let magicNumber;
       let resultText = "";
+      const tagNumber = Math.floor(Math.random() * 9) + 1;
+      const ENCRYPTION_TAG = encrypt
+        ? encryptionTags[tagNumber - 1]
+        : text.slice(text.lastIndexOf("[") + 1, text.lastIndexOf("]") - 1);
+      // const ENCRYPTION_TAG = ENCRYPTION_TAG1;
+
+      const alphabetLists = alphabets[tagNumber - 1]; // Assume this is an array of alphabet strings
       const totalAlphabets = alphabetLists.length;
+
+      console.log("Encryption tag info:", {
+        text,
+        extractable: text.slice(
+          text.lastIndexOf("[") + 1,
+          text.lastIndexOf("]") - 1
+        ),
+        ENCRYPTION_TAG,
+        tagNumber,
+        totalAlphabets,
+        encrypt,
+      });
 
       if (!encrypt) {
         // Decryption logic
         const encryptionTagIndex = text.lastIndexOf(ENCRYPTION_TAG);
 
         // Find the last opening bracket before the encryption tag
-        const magicNumberStartIndex = text.lastIndexOf(
-          "[",
-          encryptionTagIndex - 1
-        );
+        const magicNumberStartIndex = encryptionTagIndex - 4;
+
+        console.log({ encryptionTagIndex, magicNumberStartIndex });
 
         // Ensure both indices are valid
         if (encryptionTagIndex === -1 || magicNumberStartIndex === -1) {
@@ -232,11 +432,11 @@
 
         // Extract the magic number string
         const magicNumberString = text.slice(
-          magicNumberStartIndex + 1,
-          encryptionTagIndex
+          magicNumberStartIndex,
+          encryptionTagIndex - 1
         );
 
-        // console.log(`Magic number string extracted: "${magicNumberString}"`);
+        console.log(`Magic number string extracted: "${magicNumberString}"`);
 
         magicNumber = parseInt(magicNumberString, 10);
 
@@ -249,17 +449,22 @@
         }
 
         // Remove the magic number and tag from the text
-        text = text.slice(0, magicNumberStartIndex);
-        // console.log(
-        //   `Decrypted text after removing magic number and tag: "${text}"`
-        // );
+        text = text.slice(0, magicNumberStartIndex - 1);
+        console.log(
+          `Enrypted text after removing magic number and tag: "${text}"`
+        );
 
         magicNumber = -magicNumber; // Reverse for decryption
       } else {
         // Encryption logic
         magicNumber = generateMagicNumber();
-        if (text.endsWith(ENCRYPTION_TAG)) return text; // Already encrypted
+        if (text.includes(ENCRYPTION_TAG)) {
+          console.log("Text is already encrypted", { text });
+          return text; // Already encrypted
+        }
       }
+
+      console.log("Apply cipher " + magicNumber);
 
       // Apply cipher (both for encryption and decryption)
       for (let i = 0; i < text.length; i++) {
@@ -278,8 +483,13 @@
       }
 
       if (encrypt) {
-        resultText += `[${magicNumber}${ENCRYPTION_TAG}`; // Append magic number and tag
+        resultText += `[${magicNumber}${ENCRYPTION_TAG}]`; // Append magic number and tag
       }
+
+      console.log(
+        `${encrypt ? "Encryption" : " Decryption"} process compleate.`,
+        { resultText, magicNumber, ENCRYPTION_TAG }
+      );
 
       return resultText;
     }
@@ -291,6 +501,7 @@
       // Encrypt the message and display the result
       const encrypted = encryptAndDecrypt(message, true);
       document.getElementById("output").innerText = encrypted;
+      return encrypted;
     }
 
     // Function to handle decryption
@@ -299,11 +510,31 @@
       const message = document.getElementById("textInput").value;
       // Decrypt the message and display the result
       const decrypted = encryptAndDecrypt(message, false);
+      console.log({ decrypted });
       document.getElementById("output").innerText = decrypted;
+      return decrypted;
     }
 
     // Event listeners for the encrypt and decrypt buttons
     document.getElementById("encrypt").addEventListener("click", encrypter);
     document.getElementById("decrypt").addEventListener("click", decrypter);
+
+    async function copyTextToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        console.log("Text copied to clipboard successfully!");
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+      } finally {
+        await navigator.clipboard.write(new ClipboardItem(text));
+      }
+    }
+
+    document
+      .getElementById("copyButton")
+      .addEventListener(
+        "click",
+        copyTextToClipboard(document.getElementById("output").innerText)
+      );
   </script>
 </html>
