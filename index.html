@@ -12,60 +12,66 @@
       content="Knockoff version of the Enigma machine that is really just a fancy Caesar cipher."
     />
     <title>On the DL</title>
+    <!-- Google font INTER -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Define CSS variables */
       :root {
         letter-spacing: 1px;
         font-size: 25px;
-
         --white: #ffffff;
 
-        --primary_darkest: #0a105c;
-        --primary_dark: #131a77;
-        --primary: #1f2793;
-        --primary_light: #3a42a5;
-        --primary_lighter: #575eb4;
+        /* Primary – Deep Electric Purple */
+        --primary_darkest: #1a103d;
+        --primary_dark: #2b1f6c;
+        --primary: #3d2d9c;
+        --primary_light: #5a4bc0;
+        --primary_lighter: #7b6fe0;
 
-        --secondary_darkest: #00504d;
-        --secondary_dark: #026965;
-        --secondary: #0a817c;
-        --secondary_light: #23908c;
-        --secondary_lighter: #40a09c;
+        /* Secondary – Cool Cyan/Teal Blend */
+        --secondary_darkest: #003b46;
+        --secondary_dark: #005b66;
+        --secondary: #007d87;
+        --secondary_light: #26a6af;
+        --secondary_lighter: #56c7ce;
 
-        --accent_darkest: #330559;
-        --accent_dark: #440a74;
-        --accent: #58148f;
-        --accent_light: #6d2fa0;
-        --accent_lighter: #834eaf;
+        /* Accent – Vibrant Magenta-Fuchsia Range */
+        --accent_darkest: #500f58;
+        --accent_dark: #6b1671;
+        --accent: #851e8b;
+        --accent_light: #a33eaa;
+        --accent_lighter: #c56bc6;
 
         scroll-behavior: smooth;
       }
 
       /* UI Styles */
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Inter", sans-serif;
         margin: 0;
         padding: 0;
         background-color: var(--primary_darkest);
       }
 
       .container {
-        max-width: 75%;
-        margin: 20px auto;
-        padding: 20px;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
         background-color: var(--secondary_darkest);
-        color: var(--white);
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        border-radius: 6px;      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: var(--accent_lighter);
       }
 
-      h1,
       h3 {
-        text-align: center;
-        margin-bottom: 10px;
-        margin-top: 5px;
+        font-size: 1.4rem;
+        color: var(--primary_lighter);
       }
 
       .container hr {
@@ -96,8 +102,9 @@
 
       .options {
         display: flex;
-        align-items: center;
-        margin: 10px auto;
+        justify-content: center;
+        gap: 12px;
+        margin: 20px auto;
       }
 
       label {
@@ -122,25 +129,55 @@
         background-color: var(--accent_darkest);
         color: var(--white);
         cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
       }
 
       button:hover {
         background-color: var(--accent);
+        transform: scale(1.03);
       }
 
+      button:active {
+        transform: scale(0.97);
+      }
+
+      textarea {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 16px;
+        line-height: 1.5;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      textarea,
       #output {
         margin: 10px auto;
         padding: 10px;
-        border: 1px solid var(--secondary_darkest);
-        background-color: var(--secondary);
         color: var(--white);
         border-radius: 6px;
         min-height: 50px;
+        background-color: var(--secondary_light);
+        border: 1px solid var(--primary_lighter);
       }
 
       .centWrap {
         display: flex;
         justify-content: center;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .container {
+          padding: 15px;
+          max-width: 95%;
+        }
+
+        textarea {
+          width: 100%;
+        }
+
+        .options {
+          flex-direction: column;
+        }
       }
     </style>
   </head>
@@ -188,162 +225,72 @@
   <script>
     " ";
     // Encryption alphabets
-    const aSet = {
-      a0:
-        "$ydjAc XP/W\r[,^?J'IKRkSN+<hYfOszBD#t4@p_HuUMQiTx3l>vG6e\n" +
-        '-(wE%:m"r5.og=n98L{)]b0*Z&q}a~CV7!;21F',
-      a1:
-        `oVB$4G!&Iyx=MN6EKpH97W<FtDR/*S3'.c%_[avJeCz8")2],5OrbldwsmqunTjAQfhigUkLPXY;+( \n` +
-        "Z}0-\r:1@^~{>?#",
-      a2:
-        `M-hoFkRzwEvnOTfaHGSjKPIAtsmNbygeJVW*rlL}>d{u&pD^[CxBc=Q:qU_ i(5@\r,$X1#Z!%+;Y<.'807?]/6~2")\n` +
-        "349",
-      a3:
-        "461opW3M,YePI=<~d2%n};r?Kg{wH(]^*fm!>\n" +
-        `0cy".vZ@S5'+t9sqQRuEGLNAOlFVhzTJ)-BXDbj7ikU_aC \r&:[/$8#x`,
-      a4:
-        "+( {X>NrT2}@iJ-UcGK,5n[6<t\n" +
-        `"M_Wf79.\rO8d)b/xgAQk4C;Rh^=qme'1%D]jva*w0!:V&sEHl?S$Y#IyozB3PpuZF~L`,
-      bundle: [
-        "$ydjAc XP/W\r[,^?J'IKRkSN+<hYfOszBD#t4@p_HuUMQiTx3l>vG6e\n" +
-          '-(wE%:m"r5.og=n98L{)]b0*Z&q}a~CV7!;21F',
-        `oVB$4G!&Iyx=MN6EKpH97W<FtDR/*S3'.c%_[avJeCz8")2],5OrbldwsmqunTjAQfhigUkLPXY;+( \n` +
-          "Z}0-\r:1@^~{>?#",
-        `M-hoFkRzwEvnOTfaHGSjKPIAtsmNbygeJVW*rlL}>d{u&pD^[CxBc=Q:qU_ i(5@\r,$X1#Z!%+;Y<.'807?]/6~2")\n` +
-          "349",
-        "461opW3M,YePI=<~d2%n};r?Kg{wH(]^*fm!>\n" +
-          `0cy".vZ@S5'+t9sqQRuEGLNAOlFVhzTJ)-BXDbj7ikU_aC \r&:[/$8#x`,
-        "+( {X>NrT2}@iJ-UcGK,5n[6<t\n" +
-          `"M_Wf79.\rO8d)b/xgAQk4C;Rh^=qme'1%D]jva*w0!:V&sEHl?S$Y#IyozB3PpuZF~L`,
-      ],
-    };
-
-    const bSet = {
-      b0:
-        "a\n" +
-        `D?/p#LFY1U@{C-\r^J(*%_"9j.mSX,6:O8'uK03vZxo!5yw2bM&I ]G4Qt$eET+kn~Hz;R[ficd>sWAPqrlg<=})VNh7B`,
-      b1:
-        "^u'Rf>maK!xv%9p1H/A+[LBkOJsQ&zD;_.\n" +
-        'IlM#"~Vqthg,NGCy4{iZFb]ne?=U(ST$c wd)}orP<:YWj5X3@8*\r7062-E',
-      b2:
-        `04~6X?:}8\r7hWdv_Tt3'Gl%y M"*<Dx^OS+!#psu,ZE]ae1o2r.)UVnjC{5cY>$\n` +
-        "(Iqw[;@&JBg=PLNQFRf/m9b-KAiHkz",
-      b3:
-        "GZRBA^xL%geSwsrQNlm?dMiJcozX7C}kb#9YhIq6OtTj-FH3:{8[)u+n'*2(ap>0~K/E!f\r,yv$D<]WP_\n" +
-        '1 4="V.@&5;U',
-      b4:
-        "aVDWbc(q$Hs4<~[G:K^)I]xEkdMli;y/B81mF%efr3\n" +
-        `UwS\r 'jPLY{Q7.o@5N9Xtv*=!60"R},?-g_+ZC&2h#nAuzOJpT>`,
-      bundle: [
-        "a\n" +
-          `D?/p#LFY1U@{C-\r^J(*%_"9j.mSX,6:O8'uK03vZxo!5yw2bM&I ]G4Qt$eET+kn~Hz;R[ficd>sWAPqrlg<=})VNh7B`,
-        "^u'Rf>maK!xv%9p1H/A+[LBkOJsQ&zD;_.\n" +
-          'IlM#"~Vqthg,NGCy4{iZFb]ne?=U(ST$c wd)}orP<:YWj5X3@8*\r7062-E',
-        `04~6X?:}8\r7hWdv_Tt3'Gl%y M"*<Dx^OS+!#psu,ZE]ae1o2r.)UVnjC{5cY>$\n` +
-          "(Iqw[;@&JBg=PLNQFRf/m9b-KAiHkz",
-        "GZRBA^xL%geSwsrQNlm?dMiJcozX7C}kb#9YhIq6OtTj-FH3:{8[)u+n'*2(ap>0~K/E!f\r,yv$D<]WP_\n" +
-          '1 4="V.@&5;U',
-        "aVDWbc(q$Hs4<~[G:K^)I]xEkdMli;y/B81mF%efr3\n" +
-          `UwS\r 'jPLY{Q7.o@5N9Xtv*=!60"R},?-g_+ZC&2h#nAuzOJpT>`,
-      ],
-    };
-
-    const cSet = {
-      c0:
-        `*lnpIKboJxRvhidrF_1kS<GwU"TCuB^q~Y f&';a\n` +
-        "Ae62W@:(0V%sQ$tOmM>34gyc9)jH}]#?NX\r/!Z[z-D8ELP,=.5+{7",
-      c1:
-        '"93r7\n' +
-        "!DYTb.4Nm_B%1XIvJz(+=PRyG[WQ,;SAdVag2^?'6Cf:{c\rip@>jx)$KZMuUH~sw/e5O<-qtkh] E*lF}nL0#8o&",
-      c2:
-        "h9%uQ]wG&62~W\n" +
-        `H}X=7$fL8^'E+nMT1eogCY,zqd?\r5A3cx/ZF!{@U.m(iV"_<S-O;4)#0>[:I *DrlbpytBaRjkJKNPsv`,
-      c3:
-        "^ijkhwOFrucVQ<9H/q%'=?}&Iaf)_M4@L[\n" +
-        ' D*zNBo5Rv.bUAxnK87C(dp6e"Y12$,3;JT0~sWtPGS>\r-m+#yEZ:g!X]l{',
-      c4:
-        "Q8b:mRgkBqV,v5~x-H{l*WDc.\n" +
-        `Ja]pei(GCwdK6?@ M\r$&102O3r9I'yUfhN)Sn/PTXoz}=E>A[Yu#7s+FtZL"!;<%^4j_`,
-      bundle: [
-        `*lnpIKboJxRvhidrF_1kS<GwU"TCuB^q~Y f&';a\n` +
-          "Ae62W@:(0V%sQ$tOmM>34gyc9)jH}]#?NX\r/!Z[z-D8ELP,=.5+{7",
-        '"93r7\n' +
-          "!DYTb.4Nm_B%1XIvJz(+=PRyG[WQ,;SAdVag2^?'6Cf:{c\rip@>jx)$KZMuUH~sw/e5O<-qtkh] E*lF}nL0#8o&",
-        "h9%uQ]wG&62~W\n" +
-          `H}X=7$fL8^'E+nMT1eogCY,zqd?\r5A3cx/ZF!{@U.m(iV"_<S-O;4)#0>[:I *DrlbpytBaRjkJKNPsv`,
-        "^ijkhwOFrucVQ<9H/q%'=?}&Iaf)_M4@L[\n" +
-          ' D*zNBo5Rv.bUAxnK87C(dp6e"Y12$,3;JT0~sWtPGS>\r-m+#yEZ:g!X]l{',
-        "Q8b:mRgkBqV,v5~x-H{l*WDc.\n" +
-          `Ja]pei(GCwdK6?@ M\r$&102O3r9I'yUfhN)Sn/PTXoz}=E>A[Yu#7s+FtZL"!;<%^4j_`,
-      ],
-    };
-
-    const dSet = {
-      d0:
-        '^)ij$ul,7D:eY%"2T(/&N#Vx?pgcPC+k4 rIFh6sb8{y5Of\n' +
-        "LR9w}~qad0ozAGM>1Bv.\rQ_W@;m3X-Z=H'[]E*!<UJnKtS",
-      d1:
-        'Tay\rBNub0Of_;MeqFr*l<[-@261oz,LV(3GQ $"hmKwPAWtHX\n' +
-        "iv^%s=cUC>8!k'Rd#~gj/:I)p?ZS7{E9}xn4JD+5&.]Y",
-      d2:
-        '!;b6_xgY&uW@"}j3Qolta^MAF<)\r0[4/?Ci{%:eDd-Kh*HVX,RS.+82LskUmq]w$~7p 9=#\n' +
-        "'1Z5v(n>JGBEINyPzcOrfT",
-      d3:
-        "lk#tzFd2b<sQrG.w1q8{vfPEO)eDK:i;@5 0TmxRg+!n6pBY=HM3A-4C\n" +
-        `$ohuNZ"&_}J~j%XacyI>ULWV,^*[7]/9\r'?S(`,
-      d4:
-        'RcFtmHo9pz/P,fkG;xS6I Z!B]"YX<?rubhj%NO0+457{W$ae}\n' +
-        "\rn2l'MqCE&U>#iA*s1gQT3^K~_yVv=d-.JDL()@8:[w",
-      bundle: [
-        '^)ij$ul,7D:eY%"2T(/&N#Vx?pgcPC+k4 rIFh6sb8{y5Of\n' +
-          "LR9w}~qad0ozAGM>1Bv.\rQ_W@;m3X-Z=H'[]E*!<UJnKtS",
-        'Tay\rBNub0Of_;MeqFr*l<[-@261oz,LV(3GQ $"hmKwPAWtHX\n' +
-          "iv^%s=cUC>8!k'Rd#~gj/:I)p?ZS7{E9}xn4JD+5&.]Y",
-        '!;b6_xgY&uW@"}j3Qolta^MAF<)\r0[4/?Ci{%:eDd-Kh*HVX,RS.+82LskUmq]w$~7p 9=#\n' +
-          "'1Z5v(n>JGBEINyPzcOrfT",
-        "lk#tzFd2b<sQrG.w1q8{vfPEO)eDK:i;@5 0TmxRg+!n6pBY=HM3A-4C\n" +
-          `$ohuNZ"&_}J~j%XacyI>ULWV,^*[7]/9\r'?S(`,
-        'RcFtmHo9pz/P,fkG;xS6I Z!B]"YX<?rubhj%NO0+457{W$ae}\n' +
-          "\rn2l'MqCE&U>#iA*s1gQT3^K~_yVv=d-.JDL()@8:[w",
-      ],
-    };
-
-    const eSet = {
-      e0:
-        'VW8&Y:<{!;.[_1}^ 35",~6\n' +
-        "]Q-aj#Es2J@'Zul\rK%*)pL?0S=zb+CHwqxFvPOcernTdyGtBfgAkNioMmIhDR/4X>97$U(",
-      e1:
-        "pivFuNDSTqn35)Jx@6c\n" +
-        `X%,g-Lkol[BamH/&21h}\rP0^Ow;K'debIjQCAf!R$~UyzGYr8E+sMW(*9>_?4:#{7V Z".]=<t`,
-      e2:
-        `nWTd?&xSAp\r,@!Yco3j$iU<XVr>(9D}~zgQ.5^2:P#6Ov-b0'ft=E"7;[%M8+1ZlB4*]eCa\n` +
-        "m)/Iy s{RkFGJKNqLhwHu_",
-      e3:
-        "Y5${V+%'W42?azx=;7AklZs@Xb!^v\rN3U#hCHS\"pDrt10B>]M&\n" +
-        "mI69R<-wf}[qFcKe/OQ)~Jd PyijL:gT8E,nG(ou._*",
-      e4:
-        `="+#-1 QXCgLYp)P{utBoxSID<;rE'VUb*,%9]N3.(nKvRajG_kAq6}5fd42WeThM&^@c:!>zHJy[7Zl\rsw?/i~mO08$\n` +
-        "F",
-      bundle: [
-        'VW8&Y:<{!;.[_1}^ 35",~6\n' +
-          "]Q-aj#Es2J@'Zul\rK%*)pL?0S=zb+CHwqxFvPOcernTdyGtBfgAkNioMmIhDR/4X>97$U(",
-        "pivFuNDSTqn35)Jx@6c\n" +
-          `X%,g-Lkol[BamH/&21h}\rP0^Ow;K'debIjQCAf!R$~UyzGYr8E+sMW(*9>_?4:#{7V Z".]=<t`,
-        `nWTd?&xSAp\r,@!Yco3j$iU<XVr>(9D}~zgQ.5^2:P#6Ov-b0'ft=E"7;[%M8+1ZlB4*]eCa\n` +
-          "m)/Iy s{RkFGJKNqLhwHu_",
-        "Y5${V+%'W42?azx=;7AklZs@Xb!^v\rN3U#hCHS\"pDrt10B>]M&\n" +
-          "mI69R<-wf}[qFcKe/OQ)~Jd PyijL:gT8E,nG(ou._*",
-        `="+#-1 QXCgLYp)P{utBoxSID<;rE'VUb*,%9]N3.(nKvRajG_kAq6}5fd42WeThM&^@c:!>zHJy[7Zl\rsw?/i~mO08$\n` +
-          "F",
-      ],
-    };
+    const aSet = [
+      'Q1w,V`nTi6+DG$g&H}kostbUZ[l5"Od\n' +
+        "Ic 39Wqu];Nv{Aj_)0<\r!PBmR-aF2JM'L%Cx74#Y(Xzye?^*f@h.8~pES:=Kr>/",
+      "=%(k@ud!p\rPxI_lsC;v07bh?G^*LrH`W3V{)1$E.jMFBO,9A'J:U<STDQg\"amqi>5o/N}z2eYctZ& ~yK[#\n" +
+        "]fR+-864nXw",
+      "Dr4P8AdCk*fFYt_hX]uex2Zc69l;E>!(&mnS<gW?#\r-5i}w1%/jqVvp.K\"3RoGUz^Tb'{ 7aQ`sy~BMN=\n" +
+        "@IHO,)J:L+[$0",
+      "KMylr+WUOA<d$*4w(xL,>[G5f@/t9_3!0hgTQE.H6pb^iI-C;7YzZSq%De]2J}{~u=:8vm&V\n" +
+        "RX?kP1B)nj#FN`c ao'\"\rs",
+      "ntw*$JV\n" +
+        "YDacj-QM%N_0/bGq5 <>;+H:3.S1x\"'\rFo=X8^9f~u{(hUBpRe,z[)`m@&#ZrlLATIy!Ki?6Os72g4}]PEdCkWv",
+    ];
+    const bSet = [
+      "~4^/!zodNnQ,La(1<_=+WVSx\rO-{ek#3HU9bYv:A2h}&G0@l'u`\")DT[F8\n" +
+        "ji5s6mKEcwt?RZ%q XBpy*;f>M.$]7rgCPJI",
+      "R2ya!Qir3mGBl0PJ`cE~7>s?M4Afpj/\"]+kXIewW-.g\r${,(%1vCO_D#T ;q6F*So[K=Lt5^dNVz'@YZhHb&)9x8:n}<uU\n",
+      '{NwdLg&=u_v2}?cm-j+X>[sfq).FoIM"PxDWl3]%G9\n' +
+        "AyC<t'1~ea^; hB4S57p/8HEi!ZnOkK*Tz6r:VJQR0@b(U\r$,#`Y",
+      "}Vz {+hro<1_&4^yYD=LG`jI(2bcE\rAJk0O]s'e[Bu5g7,anl\"83dxS>TQPw9X)R\n" +
+        "6qH-vtM!;.pF@i%KZW$~C?N:#/f*Um",
+      "T47j9$bl.@_1EOy'Q3[e`f%{L^Ng>}iquMWa#hx](Dm8d I=RSY+!nzt5H-\r\"UBAs<&XZ,\n" +
+        "w?)K*/J2k~;Gv0o:cpVFPC6r",
+    ];
+    const cSet = [
+      "r=Z)G]0e\rMSJ1qaE*#+d{%b$~DyLVs8RH>6?9Fp[-2i^}lU \n" +
+        "Yw</W4@`vPnONgKBto7Q\".X'T,j_uI&;3m:Ahxcz(kf!C5",
+      '@5Vz0ch&q,#1=.$mE-?g2Ro jCpT4YdG%X]>i_e{:aKPbWx)*vU}^[ALH6sMl/Q!"rOw7fnBZ\rIuy8JSD<~;\n' +
+        "9t+N`k(F'3",
+      "Ds>E3+ux'_/q7:ej$ [Nwl1.PAm{ndBGrR^0b\"fzJWIOvc%Xyhk`2@StY(<L,5Z8C!Vi]6#*\r\n" +
+        "?)-M94&}HgFQp;oUa=~TK",
+      "sCiw]\r#!-on\n" +
+        "1,E $?)+*K{Sc5U=x}ve~ZIkt;A6g9b/0z_D'T>B&H^MWPfpJ[7Y<@XG`3hOLQr\"Rjym4a%V.Nul2q(dF:8",
+      "Vgzq]@%LS^{IkP_ot&#*6\n" +
+        " CwjrT8bD)uG/?B'.RUlE~4m},sAM;Y!N[cxeZ`\r:(QiyX<3+=v\"p17>ad9W2F$JhnK-O05fH",
+    ];
+    const dSet = [
+      "DrcoaEAnIH{+t?wxX!FV<@>qigk$#WvS[*Obfm]:&Y=;(~ CBRj-Z\n" +
+        ",GdUMT8%14_'y3l0PhQ7^zu}6/\"s`J)5p2.\rL9eKN",
+      "hRpcn\rt/;Ux_slT]3ygr5v0NWo=`H>u#S)mzIjAOwei^{qL7Db!k@4$P'+8(.2\n" +
+        '<Q?fF*V9,[}-Zd1& G~MYa":KXE%JB6C',
+      "z0mXe<YVW~81Qb5u,rE/i:=Awp?@{$hgxGRlv`kIDUq%3JC}72-_!;]H[otK46(sPaZ#F.^\"9n&cf N+\rdS'*y\n" +
+        "jTMLB>O)",
+      "3Ny$IpD9;'Gwv#O-W @^nsulbdQUx}R]YV_,E1/ZgX%0rC8e24~5i([zF`=Hj>6o{M.\n" +
+        'qJmK&":?B)7h<\rcPfA*+t!TaLSk',
+      '1V$l0#{;K8+F/w!ayvqHQ9L*,m@fI6bZ B\r:x4J.=d3)?YAhM(ON2XDG&g}WnCu"~`>]zeURT_^Eri7[j\n' +
+        "kt%Sp'-oPs<5c",
+    ];
+    const eSet = [
+      "muRx9 0]W_>8/<d,{U2:J[;q7#5F1-afS!=OQY+T@I~kyw$Mgncj&3GNXDs.?Hr\n" +
+        "Bi'v(KpP4Vh\rb)zoLl^E}6ZCe*\"tA%`",
+      "sz7$@MK+CiL>w0hx`JAo{WtF~]dGQ1\"S6VcD;er?n)9[ya-H'pj=. %IlgBkZTRbPf!/v3(*,8U&q:O<u_5#XYE}4\r2Nm\n" +
+        "^",
+      'XoH ZL"k<I5*V][q+>(srDp:yvd2%N1{j.UF`;E\n' +
+        "'wugOaAn8,zJ6etM3SQ#K/lC!97@?f0_Y=i\rGWT$)4}xRB&cPb^h-~m",
+      "p#t~/}&.%FHaCKA2dwN3QyvBnh!5Pg\r6-ToUi1zk8s 7bMe`r(+\n" +
+        `'mSf)q=?<cJ>VR{;xO]EY,I*Zl@j[GLW"9u:4D^X$0_`,
+      "Bq<lK\ro/c+@e\n" +
+        "^?3}XD6'i]SCY$VJx9F2Nmb*_yh0-8.!nv~4 k(UEWpr`j[;{u:gt#,dAzPIL7ZsO5HfMTQ\"R%1>aG&)=w",
+    ];
 
     // const v1 = alphabets;
-    const v1 = aSet.bundle;
-    const v2 = bSet.bundle;
-    const v3 = cSet.bundle;
-    const v4 = dSet.bundle;
-    const v5 = eSet.bundle;
+    const v1 = aSet;
+    const v2 = bSet;
+    const v3 = cSet;
+    const v4 = dSet;
+    const v5 = eSet;
     const v6 = [...v1, ...v2];
     const v7 = [...v1, ...v2, ...v3];
     const v8 = [...v1, ...v2, ...v3, ...v4];
@@ -387,86 +334,61 @@
       function generateMagicNumber() {
         const min = 5;
         const max = 999;
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+        const number = Math.floor(Math.random() * (max - min + 1)) + min;
+        return { string: number.toString().padStart(3, "0"), number };
       }
 
-      if (typeof text !== "string") return text; // Return if not a string
+      if (typeof text !== "string") return text;
 
       let magicNumber;
       let resultText = "";
-      const tagNumber = Math.floor(Math.random() * 9) + 1;
-      const ENCRYPTION_TAG = encrypt
-        ? encryptionTags[tagNumber - 1]
-        : text.slice(text.lastIndexOf("[") + 1, text.lastIndexOf("]") - 1);
-      // const ENCRYPTION_TAG = ENCRYPTION_TAG1;
+      let ENCRYPTION_TAG;
+      let tagIndex;
 
-      const alphabetLists = alphabets[tagNumber - 1]; // Assume this is an array of alphabet strings
+      if (!encrypt) {
+        // 🔍 Use regex to extract [XXX[EN_VY]]
+        const match = text.match(/\[(\d{3})\[EN_V(\d)\]\]$/);
+
+        if (!match) {
+          console.warn("No valid encryption tag found. Skipping decryption.");
+          return text;
+        }
+
+        const magicStr = match[1];
+        const tagNum = parseInt(match[2], 10);
+
+        magicNumber = {
+          string: magicStr,
+          number: -parseInt(magicStr, 10), // Decryption: reverse shift
+        };
+        ENCRYPTION_TAG = `[EN_V${tagNum}]`;
+        tagIndex = tagNum - 1;
+
+        // Remove tag and magic number from the original text
+        text = text.replace(match[0], "");
+      } else {
+        // Encryption
+        tagIndex = Math.floor(Math.random() * 9);
+        ENCRYPTION_TAG = encryptionTags[tagIndex];
+        magicNumber = generateMagicNumber();
+
+        if (text.includes(ENCRYPTION_TAG)) {
+          console.log("Text is already encrypted", { text });
+          return text;
+        }
+      }
+
+      const alphabetLists = alphabets[tagIndex];
       const totalAlphabets = alphabetLists.length;
 
       console.log("Encryption tag info:", {
         text,
-        extractable: text.slice(
-          text.lastIndexOf("[") + 1,
-          text.lastIndexOf("]") - 1
-        ),
         ENCRYPTION_TAG,
-        tagNumber,
+        tagIndex,
         totalAlphabets,
         encrypt,
       });
 
-      if (!encrypt) {
-        // Decryption logic
-        const encryptionTagIndex = text.lastIndexOf(ENCRYPTION_TAG);
-
-        // Find the last opening bracket before the encryption tag
-        const magicNumberStartIndex = encryptionTagIndex - 4;
-
-        console.log({ encryptionTagIndex, magicNumberStartIndex });
-
-        // Ensure both indices are valid
-        if (encryptionTagIndex === -1 || magicNumberStartIndex === -1) {
-          // console.error("Error: Missing encryption tag or magic number.");
-          return text; // Return original text if in unexpected format
-        }
-
-        // Extract the magic number string
-        const magicNumberString = text.slice(
-          magicNumberStartIndex,
-          encryptionTagIndex - 1
-        );
-
-        console.log(`Magic number string extracted: "${magicNumberString}"`);
-
-        magicNumber = parseInt(magicNumberString, 10);
-
-        // Handle NaN issue
-        if (isNaN(magicNumber)) {
-          console.error(
-            `Error: Failed to parse magic number. Extracted string: "${magicNumberString}"`
-          );
-          return text; // Return the original text if the magic number is invalid
-        }
-
-        // Remove the magic number and tag from the text
-        text = text.slice(0, magicNumberStartIndex - 1);
-        console.log(
-          `Enrypted text after removing magic number and tag: "${text}"`
-        );
-
-        magicNumber = -magicNumber; // Reverse for decryption
-      } else {
-        // Encryption logic
-        magicNumber = generateMagicNumber();
-        if (text.includes(ENCRYPTION_TAG)) {
-          console.log("Text is already encrypted", { text });
-          return text; // Already encrypted
-        }
-      }
-
-      console.log("Apply cipher " + magicNumber);
-
-      // Apply cipher (both for encryption and decryption)
       for (let i = 0; i < text.length; i++) {
         const char = text[i];
         const currentAlphabet = alphabetLists[i % totalAlphabets];
@@ -474,16 +396,16 @@
         const index = currentAlphabet.indexOf(char);
 
         if (index !== -1) {
-          let newIndex = (index + magicNumber) % alphabetLength;
-          if (newIndex < 0) newIndex += alphabetLength; // Handle negative index for decryption
+          let newIndex = (index + magicNumber.number) % alphabetLength;
+          if (newIndex < 0) newIndex += alphabetLength;
           resultText += currentAlphabet[newIndex];
         } else {
-          resultText += char; // Keep unchanged if not in the alphabet
+          resultText += char;
         }
       }
 
       if (encrypt) {
-        resultText += `[${magicNumber}${ENCRYPTION_TAG}]`; // Append magic number and tag
+        resultText += `[${magicNumber.string}${ENCRYPTION_TAG}]`;
       }
 
       console.log(
@@ -515,26 +437,41 @@
       return decrypted;
     }
 
-    // Event listeners for the encrypt and decrypt buttons
-    document.getElementById("encrypt").addEventListener("click", encrypter);
-    document.getElementById("decrypt").addEventListener("click", decrypter);
+    const encryptButton = document.getElementById("encrypt");
+    const decryptButton = document.getElementById("decrypt");
+    const copyButton = document.getElementById("copyButton");
+    const textInput = document.getElementById("textInput");
+    const outputArea = document.getElementById("output");
 
+    /**
+     * Copy the given text to the clipboard.
+     * @param {string} text - Text to copy.
+     */
     async function copyTextToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
         console.log("Text copied to clipboard successfully!");
       } catch (err) {
         console.error("Failed to copy text: ", err);
-      } finally {
-        await navigator.clipboard.write(new ClipboardItem(text));
       }
     }
 
-    document
-      .getElementById("copyButton")
-      .addEventListener(
-        "click",
-        copyTextToClipboard(document.getElementById("output").innerText)
-      );
+    // Event listeners
+    encryptButton.addEventListener("click", () => {
+      const inputText = textInput.value;
+      const encryptedText = encryptAndDecrypt(inputText, true);
+      outputArea.value = encryptedText; // Display the encrypted text
+    });
+
+    decryptButton.addEventListener("click", () => {
+      const inputText = textInput.value;
+      const decryptedText = encryptAndDecrypt(inputText, false);
+      outputArea.value = decryptedText; // Display the decrypted text
+    });
+
+    copyButton.addEventListener("click", () => {
+      const text = outputArea.value; // Get the output field text
+      copyTextToClipboard(text); // Copy it to clipboard
+    });
   </script>
 </html>
